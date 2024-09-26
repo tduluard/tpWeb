@@ -3,44 +3,44 @@
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 function DnD(canvas, interactor) {
 	//Q1: Définir ici les attributs de la 'classe'
-  var xPos = 0;
-  var yPos = 0;
-  var xFinal = 0;
-  var yFinal = 0;
+  var initX = 0;
+  var initY = 0;
+  var finalX = 0;
+  var finalY = 0;
   var mousePressed = false
 
 	// Developper les 3 fonctions gérant les événements
-  function handlerMouseClick(evt){
+  this.clickMouse = function(evt){
     mousePressed = true;
 
-    var pos = getMousePosition(canvas, evt);
-    console.log("Pressed : " + pos.x + " " + pos.y);
-  }
+    this.initX = getMousePosition(canvas, evt).x;
+    this.initY = getMousePosition(canvas, evt).y;
 
-  function handlerMouseMovement(evt){
+    console.log("Pressed : " + this.initX + " " + this.initY);
+  }.bind(this);
+
+  this.mouseMove = function(evt){
     if(mousePressed){
-      xPos = getMousePosition(canvas, evt).x;
-      yPos = getMousePosition(canvas, evt).y;
+      this.finalX = getMousePosition(canvas, evt).x;
+      this.finalY = getMousePosition(canvas, evt).y;
 
-      var pos = getMousePosition(canvas, evt);
-      console.log("Movement Pressed : " + pos.x + " " + pos.y);
+      console.log("Movement Pressed : " + this.finalX + " " + this.finalY);
     }
-  }
+  }.bind(this);
 
-  function handlerMouseReleased(evt){
+  this.releaseMouse = function(evt){
     mousePressed = false;
-    xFinal = getMousePosition(canvas, evt).x;
-    yFinal = getMousePosition(canvas, evt).y;
 
-    var pos = getMousePosition(canvas, evt);
-    console.log("Released : " + pos.x + " " + pos.y);
-  }
+    this.initX = getMousePosition(canvas, evt).x;
+    this.initY = getMousePosition(canvas, evt).y;
+
+    console.log("Released : " + this.initX + " " + this.initY);
+  }.bind(this);
 
 	// Associer les fonctions précédentes aux évènements du canvas.
-  canvas.addEventListener("mousedown", handlerMouseClick);
-  canvas.addEventListener("mouseup", handlerMouseReleased);
-  canvas.addEventListener("mousemove", handlerMouseMovement);
-
+  canvas.addEventListener('mousedown', this.clickMouse, false);
+  canvas.addEventListener('mouseup', this.releaseMouse, false);
+  canvas.addEventListener('mousemove', this.mouseMove, false);
 };
 
 
