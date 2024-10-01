@@ -3,38 +3,34 @@
 // L'interacteur viendra dans un second temps donc ne vous en souciez pas au départ.
 function DnD(canvas, interactor) {
 	//Q1: Définir ici les attributs de la 'classe'
-  var initX = 0;
-  var initY = 0;
-  var finalX = 0;
-  var finalY = 0;
-  var mousePressed = false
+  this.initX = 0;
+  this.initY = 0;
+  this.finalX = 0;
+  this.finalY = 0;
+  this.mousePressed = false;
+  this.interactor = interactor;
 
 	// Developper les 3 fonctions gérant les événements
   this.clickMouse = function(evt){
-    mousePressed = true;
-
+    this.mousePressed = true;
     this.initX = getMousePosition(canvas, evt).x;
     this.initY = getMousePosition(canvas, evt).y;
-
-    console.log("Pressed : " + this.initX + " " + this.initY);
+    this.interactor.onInteractionStart(this);
   }.bind(this);
 
   this.mouseMove = function(evt){
-    if(mousePressed){
+    if(this.mousePressed){
       this.finalX = getMousePosition(canvas, evt).x;
       this.finalY = getMousePosition(canvas, evt).y;
-
-      console.log("Movement Pressed : " + this.finalX + " " + this.finalY);
+      this.interactor.onInteractionUpdate(this);
     }
   }.bind(this);
 
   this.releaseMouse = function(evt){
-    mousePressed = false;
-
+    this.mousePressed = false;
     this.initX = getMousePosition(canvas, evt).x;
     this.initY = getMousePosition(canvas, evt).y;
-
-    console.log("Released : " + this.initX + " " + this.initY);
+    this.interactor.onInteractionEnd(this);
   }.bind(this);
 
 	// Associer les fonctions précédentes aux évènements du canvas.

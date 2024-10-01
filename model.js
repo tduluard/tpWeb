@@ -13,14 +13,14 @@ function Shape(startX, startY, thickness, color){
     this.color = color;
 }
 
-function Rectangle(startX, startY, hight, width, thickness, color){
-    Shape.call(startX, startY, thickness, color);
-    this.hight = hight;         //Hauteur du rectangle
+function Rectangle(startX, startY, height, width, thickness, color){
+    Shape.call(this, startX, startY, thickness, color);
+    this.height = height;       //Hauteur du rectangle
     this.width = width;         //largeur du rectangle
 }
 
 function Line(startX, startY, endX, endY, thickness, color){
-    Shape.call(startX, startY, endX, endY, thickness, color);
+    Shape.call(this, startX, startY, thickness, color);
     this.endX = endX;
     this.endY = endY;
 }
